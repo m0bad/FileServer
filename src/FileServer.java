@@ -16,5 +16,19 @@ public class FileServer {
             System.out.println("ERROR: " + e);
             System.exit(1);
         }
+
+        while (true){
+            try{
+                // TODO consider some validations and security in future
+                clientSocket = serverSocket.accept();
+                System.out.println("Accepted connection : " + clientSocket);
+
+                Thread thread = new Thread(new ClientConnection(clientSocket));
+
+                thread.start();
+            }catch(Exception e){
+                System.err.println("Error in connection attempt.");
+            }
+        }
     }
 }
