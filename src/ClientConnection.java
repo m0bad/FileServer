@@ -48,12 +48,13 @@ public class ClientConnection implements Runnable {
     public void recieveFile() {
         try {
             int bytesRead;
-
             DataInputStream clientData = new DataInputStream(socketClient.getInputStream());
             String fileName = clientData.readUTF();
-            OutputStream outputStream = new FileOutputStream((Helpers.getCurrentDateTime() + "_" + fileName));
+
+            OutputStream outputStream = new FileOutputStream(("recieved_" + fileName));
             long size = clientData.readLong();
             byte[] buffer = new byte[1024];
+
             while (size > 0 && (bytesRead = clientData.read(buffer, 0, (int) Math.min(buffer.length, size))) != -1) {
                 outputStream.write(buffer, 0, bytesRead);
                 size -= bytesRead;

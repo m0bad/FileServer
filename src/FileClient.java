@@ -89,13 +89,16 @@ public class FileClient {
             DataInputStream clientData = new DataInputStream(in);
 
             fileName = clientData.readUTF();
-            OutputStream outputStream = new FileOutputStream(Helpers.getCurrentDateTime() + "_" + fileName);
+
+            OutputStream outputStream = new FileOutputStream("recieved_" + fileName);
 
             long size = clientData.readLong();
             byte [] buffer = new byte[1024];
 
             while (size > 0 && (bytesRead = clientData.read(buffer, 0, (int) Math.min(buffer.length, size))) != -1){
                 outputStream.write(buffer, 0, bytesRead);
+                System.out.println("buffer: " + buffer);
+                System.out.println("bytesRead: " + bytesRead);
                 size -= bytesRead;
             }
 
